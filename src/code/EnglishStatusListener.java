@@ -38,13 +38,26 @@ public class EnglishStatusListener implements StatusListener{
 
 	@Override
 	public void onStatus(Status status) {
-		LOG.info(status.getText());
+		String tweetText = status.getText();
+		if(isEnglish(tweetText)) {
+			LOG.info(status.getText());
+		}
 	}
 
 	@Override
 	public void onTrackLimitationNotice(int arg0) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public static boolean isEnglish(String tweetText) {
+		for(int i = 0;i < tweetText.length();i++) {
+			int c = tweetText.charAt(i);
+			if(c > 127) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 }
