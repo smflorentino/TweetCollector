@@ -36,6 +36,13 @@ public class EnglishStatusListener implements StatusListener{
 		
 	}
 
+	/**
+	 * Use log4j to write the Tweet Text to disk. Note that 
+	 * we only collect Tweet Text content. If you want to collect
+	 * additional data, the Status object has several methods including
+	 * getUser(), getGeolocation(), and so on. Twitter4j has documentation on
+	 * their website on these.
+	 */
 	@Override
 	public void onStatus(Status status) {
 		String tweetText = status.getText();
@@ -50,6 +57,14 @@ public class EnglishStatusListener implements StatusListener{
 		
 	}
 	
+	/**
+	 * Our hack for filtering English tweets. While we could get the language of the user
+	 * object returned by status.getUser(), people with an English language set still tweet
+	 * in other languages. We simply check if the Tweet text contains non-ASCII characters;
+	 * if it does, we do not collect it.
+	 * @param tweetText
+	 * @return true if tweetText contains no non-ASCII characters, false otherwise
+	 */
 	public static boolean isEnglish(String tweetText) {
 		for(int i = 0;i < tweetText.length();i++) {
 			int c = tweetText.charAt(i);
